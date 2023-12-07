@@ -32,35 +32,41 @@ namespace L36_advancedPersonnelAccounting
                                   $"\n{CommandDeleteDossier}) Удалить досье.\n{CommandExit}) Выход.\n");
 
                 Console.Write("Выбирите номер меню: ");
-                numberMenu = Convert.ToInt32(Console.ReadLine());
 
-                Console.Clear();
-
-                switch (numberMenu)
+                if (int.TryParse(Console.ReadLine(), out numberMenu))
                 {
-                    case CommandAddDossier:
-                        AddDossier(persons, jobTitles);
-                        continue;
+                    Console.Clear();
 
-                    case CommandDisplayAllDossier:
-                        FormatOutput(persons, jobTitles, delimiter);
-                        break;
+                    switch (numberMenu)
+                    {
+                        case CommandAddDossier:
+                            AddDossier(persons, jobTitles);
+                            continue;
 
-                    case CommandDeleteDossier:
-                        DeleteDossier(persons, jobTitles);
-                        break;
+                        case CommandDisplayAllDossier:
+                            FormatOutput(persons, jobTitles, delimiter);
+                            break;
 
-                    case CommandExit:
-                        isOpen = false;
-                        continue;
+                        case CommandDeleteDossier:
+                            DeleteDossier(persons, jobTitles);
+                            break;
 
-                    default:
-                        Console.WriteLine("Введена неизвестная команда.");
-                        break;
+                        case CommandExit:
+                            isOpen = false;
+                            continue;
+
+                        default:
+                            Console.WriteLine("Введена неизвестная команда.");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Вы ввели некорректные данные.");
                 }
 
                 Console.WriteLine("\nДля возврата в меню, нажмите любую клавишу.");
-                Console.ReadKey();
+                Console.ReadKey(true);
             }
         }
 
@@ -73,7 +79,7 @@ namespace L36_advancedPersonnelAccounting
             {
                 indexOfPerson--;
 
-                if (indexOfPerson < persons.Count && indexOfPerson > -1)
+                if (indexOfPerson < persons.Count && indexOfPerson >= 0)
                 {
                     persons.RemoveAt(indexOfPerson);
                     jobTitles.RemoveAt(indexOfPerson);
